@@ -1,0 +1,1444 @@
+doctype html
+html(lang="en")
+    head
+        title Calendaree || GYM Management 
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0')
+        link(href='/static/css/style.css' rel='stylesheet' type='text/css')
+        link(href='/static/css/gymmanagement.css' rel='stylesheet' type='text/css')
+        link(href=`/static/css/${orgcolor}.css` rel='stylesheet' type='text/css')
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="images/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="images/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+        <link rel="icon" type="images/png" sizes="192x192" href="/images/favicon-192x192.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+body  
+    div.container
+        div.content
+            div.header
+                div.logo
+                    table
+                        tr 
+                            td(width="80%" style="text-align:left")
+                                //-a(href="https://www.calendaree.com/")
+                                img(src="/static/image/Calendaree-logo-Original.png")
+                                img(id='gymlogo' src="/getlogogym/"+subsid+".png" onerror="this.style.display='none'" style="width:15%; margin-left:32%;")
+                            td
+                                | <b>#{username}</b><br>
+                                <a href="/1/menu" class="loginlink">Main</a>&nbsp;&nbsp;
+                                <a href="/1/gymmanagement" class="loginlink">GYM Mgmt.</a>&nbsp;&nbsp;
+                                <a href="/1/login" class="loginlink">Logout</a><br>
+                                button.metal.linear(onclick='sendmessage1()') Support On  <i class="fa fa-whatsapp" style="font-size:24px;">
+            //-.main.metalpanel.linear
+                div
+                    table
+                        tr
+                            td(width='10%')
+                                img(src='/static/image/logo.png' width='55px' height='55px')
+                            td(width='80%').aboutcalendaree
+                                | Gym Membership
+                            td(width='10%')
+                            img(src='/static/image/profile.jpeg' width='55px' height='55px')
+        div.loader#loader2
+            table(align='center') 
+                tr(align='center') 
+                    td(align='center')
+                        | Saving.....
+        div(width="100%").loader#divusermsg
+            table(width="100%" align='center' style="margin:0px; padding:0px;") 
+                tr(width="100%" align='center' style="margin:0px; padding:0px;") 
+                    td(align='center' style="width:100%; !important;")
+                        div(width="100%" id="usermsg12" style="color:rgb(93, 194, 222)")
+        div.loader#loader3
+            table(align='center') 
+                tr(align='center') 
+                    td(align='center')
+                        h1 Loading.....
+        div.model12#menugymoption
+            table.divadminmgmt(width = '100%')
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        table.metalpanel.linear 
+                            tr     
+                                td 
+                                    button.metal.linear(width='140px' onclick="showmembermgmt()") Member Mgmt
+                                td 
+                                    button.metal.linear(width='140px' onclick="attendancereport()" ) Mem Atndnce
+                                td 
+                                    button.metal.linear(width='140px' onclick="openbmi()" ) BMI Mgmt
+                                td  
+                                    button.metal.linear(width='140px' onclick="openmemberreport()" ) Member Report
+                                //- td  
+                                //-     button.metal.linear(width='140px' onclick="openmemberattendencereport()" ) Attendence Report    
+                                td 
+                                    button.metal.linear(width='140px' onclick="openbalancereport()" ) Balance Rpt
+                                td 
+                                    button.metal.linear(width='140px' onclick="openpaymetreport()" ) Pymnt Rpt
+                                td  
+                                    button.metal.linear(width='140px' onclick="openworkoutcards()" ) Workout Card
+                                //-td 
+                                    button.metal.linear(width='140px' onclick="attendancereport()" ) P.T.
+        .main.metalpanel.linear#gymbase
+            table(width='100%')
+                tr      
+                    td(width='100%')
+                        h1 GYM Management
+                tr
+                    table(width="100%")
+                        tr(align="center")
+                            td(class="aligncenter")
+                                if owner === "no" && admin2nd === 0 && gymmenber === 0 && started==0  
+                                        table(align='center')
+                                        tr(align='center')
+                                            td(align='center')
+                                                button.metal.linear(onclick='subscribegymmanagement()') Subscribe for Gym Membership Management
+                        
+                        tr 
+                            td 
+                                if owner === "yes" && started==0 
+                                    <img src="/static/image/updateorganization.jpeg" onclick="orginfo();"  style="width:70px; "/> <br><p> Organization Info <br></p> 
+                      
+                        tr(align="center" )
+                            td(class="aligncenter")
+                                if owner === "yes"  && started==1 ||(admin2nd === 1 )
+                                    table(width="100%" cellspacing="10" cellpadding="10")
+                                        if substatus===1
+                                            tr(align="center")
+                                                    if ((owner === "yes" && started === 1 && substatus === 1) || admin2nd === 1)
+                                                        table(align="center") 
+                                                            tr(align="center")
+                                                                td(align="center")
+                                                                        table(align="center")
+                                                                            tr
+                                                                                td
+                                                                                    img(src='/static/image/board.png' onclick="showdashboard()" style='width:130px !important; height:160px important;')
+                                                                            tr
+                                                                                td 
+                                                                                    button.metal.linear(width='140px' onclick="showdashboard()") Dashboard
+                                                            tr(align="center")
+                                                                td(align="center")
+                                                                    table(align="center")
+                                                                        tr
+                                                                            td
+                                                                                img(src='/static/image/staffmanagement.png' onclick="showmembermgmt()" style='width:130px !important; height:160px important;')
+                                                                        tr
+                                                                            td 
+                                                                                button.metal.linear(width='140px' onclick="showmembermgmt()") Member Mgmt
+                                                                td(align="center")
+                                                                    table(align="center")
+                                                                        tr
+                                                                            td
+                                                                                img(src='/static/image/memberattendance.png'  onclick="attendancereport()"  style='width:130px !important; height:160px important;')
+                                                                        tr
+                                                                            td 
+                                                                                button.metal.linear(width='140px' onclick="attendancereport()" ) Mem Atndnce
+                                            tr(align="center")
+                                                table(align="center")
+                                                    if owner === "yes" && started==1  &&  substatus=== 1 
+                                                        tr(align="center")
+                                                            
+                                                            td(align="center")
+                                                                table(align="center")
+                                                                    tr
+                                                                        td
+                                                                            img(src='/static/image/planmgmt.png'  onclick="showplanmgmt()"  style='width:130px !important; height:160px important;')
+                                                                    tr
+                                                                        td 
+                                                    
+                                                                            button.metal.linear(width='140px' onclick="showplanmgmt()" ) Plan Mgmt
+                                                            td(class="aligncenter") 
+                                                                table(cellspacing="10" cellpadding="10")
+                                                                    tr
+                                                                        td
+                                                                            img(src='/static/image/gymprofile.png'  onclick="showorgprofile()"  style='width:140px !important; height:170px important;')
+                                                                    tr
+                                                                        td 
+                                                                            button.metal.linear(width='140px' onclick="showorgprofile()" ) Gym Profile
+                                                            
+                                            tr(align="center")
+                                                if owner === "yes" && started==1  &&  substatus=== 1
+                                                    table(align="center")
+                                                        tr(align="center")
+                                                            td(align="center")
+                                                                table(cellspacing="10" cellpadding="10")
+                                                                    tr 
+                                                                        td
+                                                                            img(src='/static/image/gymadmin.png'  onclick="showadminmgmt()"  style='width:140px !important; height:160px important;')
+                                                                    tr
+                                                                        td 
+                                                                            button.metal.linear(width='140px' onclick="showadminmgmt()" ) Admin Mgmt
+                                                            td(align="center")
+                                                                table(cellspacing="10" cellpadding="10")    
+                                                                    tr
+                                                                        td
+                                                                            img(src='/static/image/fileupload.png'  onclick="openuploadwindow()"  style='width:130px !important; height:130px important;')
+                                                                    tr
+                                                                        td 
+                                                                            button.metal.linear(width='140px' onclick="openuploadwindow()" ) Upload Data
+                                                        tr(align="center")    
+                                                            td(align="center") 
+                                                                table(cellspacing="10" cellpadding="10")
+                                                                    tr
+                                                                        td
+                                                                            img(src='/static/image/Account status.jpeg'  onclick="showgymaccount()"  style='width:130px !important; height:180px important;')
+                                                                    tr
+                                                                        td 
+                                                                            button.metal.linear(width='140px' onclick="showgymaccount()" ) Account Status
+                                        if substatus===0         
+                                            tr 
+                                                td 
+                                                    h1 You have reached the end of your subscription for the GYM Management Module
+                                            tr
+                                                td 
+                                                    button.metal.linear(onclick='sendmessage2()') Sales On <i class="fa fa-whatsapp" style="font-size:24px;">
+                                                 
+                        tr(align="center")
+                            td(class="aligncenter")
+                                if owner === "yes" && started==1  &&  substatus=== 1 || ( admin2nd === 1  && substatus=== 1)
+                                    table(width="100%" cellspacing="0" cellpadding="0")
+                                        //- tr(align="center")
+                                        //-     td
+                                        //-         table(align="center")
+                                        //-             tr
+                                        //-                 td
+                                        //-                     img(src='/static/image/membermgmt.png' style='width:160px !important; height:160px important;')
+                                        //-             tr
+                                        //-                 td 
+                                        //-                     button.metal.linear(width='140px' onclick="showmembermgmt()") Member Mgmt
+                                        //-     td
+                                        //-         table(align="center")
+                                        //-             tr
+                                        //-                 td
+                                        //-                     img(src='/static/image/memberattendance.png' style='width:160px !important; height:160px important;')
+                                        //-             tr
+                                        //-                 td 
+                                        //-                     button.metal.linear(width='140px' onclick="attendancereport()" ) Mem Atndnce
+                                if owner === "no" && started==1  &&  substatus=== 0 && admin2nd === 1 
+                                    table 
+                                        tr 
+                                            td 
+                                                h1 You have reached the end of your subscription for the GYM Management  Module
+                                        tr 
+                                            td 
+                                                h1 Contact Your Respective Organization
+                                        //-td
+                                                table(align="center")
+                                                    tr
+                                                        td
+                                                            img(src='/static/image/diet.jpg' style='width:160px !important; height:160px important;')
+                                                    tr
+                                                        td 
+                                                            button.metal.linear(width='140px' onclick="enddatereport()" ) Diet Req
+                        tr(align="center")
+                            td(class="aligncenter")        
+                                if gymmenber == 1
+                                    script(type = 'text/javascript').
+                                        document.getElementById("gymlogo").style.display ='none';
+                                    table(width="100%" cellspacing="0" cellpadding="0")
+                                        tr(align="center")
+                                            td 
+                                                table(align="center") 
+                                                    tr 
+                                                        td 
+                                                            button.metal.linear(width='140px' onclick="getallsubscriptions()" ) Check Subscriptions 
+                                                        td
+                                                            select(id='selectgym' onchange='membermenu()' style='font-size:17px;')
+                                                                option(value="Select") Select
+                                                        
+        div.model12#membermenu
+            table.divadminmgmt(width = '100%')
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        button(onclick="memberprofile()") My Profile
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        button(onclick="paymenthistorymem()") Payment History
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        button(onclick="openworkoutmem()") Workout Card 
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        button(onclick="openmembmi()") BMI Reports
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        button(onclick="closememberinfopage();") Go Back
+        div.model12#workoutmember
+            table(width = '100%' align='center')
+                h1(style='background-color:#e5e4e2; text-shadow: 0.1em 0.1em 0.05em #c0c0c0;') Workout Card
+                tr(align = 'center' id='workoutcardmem12')
+                    td(align = 'center')
+                        table(align='center') 
+                            tr(align='center') 
+                                td(style='font-size:17px; background-color:white;')
+                                    div#workout12
+                            tr 
+                                td 
+                                    br
+                                    br
+                tr(align = 'center')
+                    td(align = 'center')
+                        table(align='center') 
+                            tr(align='center') 
+                                td 
+                                    button(onclick="screencapture3()") Download
+                                td
+                                    button(onclick="closeworkoutmem()") X
+        div.model12#bmireportmember
+                table(width = '100%' align='center')
+                    h1 BMI Report
+                    tr(align = 'center')
+                        td(align = 'center')
+                            table(align='center') 
+                                tr(align='center') 
+                                    td
+                                        div#bmireportmem
+                                tr 
+                                    td
+                                        button(onclick="closebmi()") X
+        div.model12#paymenthistorymem
+            table(width = '100%' align='center')
+                h1(style='background-color:#e5e4e2; text-shadow: 0.1em 0.1em 0.05em #c0c0c0;') My Payments
+                tr(align = 'center')
+                    td(align = 'center')
+                        table(align='center') 
+                            tr(align='center') 
+                                td
+                                    label From
+                                    br
+                                    input(type='date' id='fromdatemem' style='font-size:17px;')
+                                td
+                                    label To
+                                    br
+                                    input(type='date' id='todatemem' style='font-size:17px;')
+                tr(align = 'center') 
+                    td(align = 'center') 
+                        table(align = 'center') 
+                            tr(align = 'center')
+                                td 
+                                    button.metal.linear(onclick='seepaymentmem()') See Report
+                                td 
+                                    button(onclick='closepaymenthistorymem()') X
+                                td(id='btndownload3' style='display: none;')   
+                                    //-CallDirectory download btn 
+                                    button.metal.linear(onclick='downloadreport()' ) Download
+                                        span(class="glyphicon glyphicon-download")             
+                tr(align = 'center') 
+                    td(align = 'center') 
+                        table(align = 'center') 
+                            tr(align = 'center')
+                                td
+                                    div#paymenthistorymember
+                
+        div.model12#memberprofile
+            table(width = '100%' align='center')
+                h1(style='background-color:#e5e4e2; text-shadow: 0.1em 0.1em 0.05em #c0c0c0;') My Profile
+                tr(align = 'center')
+                    td(align = 'center')
+                        table(align = 'center' class = 'formstyle')
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Member ID 
+                                td(id='memberidmem' style='text-align:left;')
+                                td 
+                                    //- /input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Name' style='font-size:17px;')   
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Name 
+                                td(id='namemem' style='text-align:left;')
+                                td 
+                                    input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Name' style='font-size:17px;')    
+                            tr(style='text-align:left;')
+                                td(style='text-align:left;') Email 
+                                td(id='emailmem' style='text-align:left;')
+                                td 
+                                    input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Email' style='font-size:17px;')
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Mobile 
+                                td(id='mobilemem' style='text-align:left;')
+                                td 
+                                    //-input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Number' style='font-size:17px;' disabled)
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Anniversary Date
+                                td(id="anniversarymem" style='text-align:left;')
+                                td 
+                                    input(type='Date' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Anniversary Date' style='font-size:17px;')       
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Bith Date
+                                td(id='birthdatemem' style='text-align:left;')
+                                td 
+                                    input(type='Date' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Bith Date' style='font-size:17px;')          
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Address  
+                                td(style='text-align:left;' id="addressmem")
+                                td 
+                                    input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Address' style='font-size:17px;')
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') City
+                                td(id="citymem" style='text-align:left;')
+                                td 
+                                    input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New City' style='font-size:17px;')
+                            tr(style='text-align:left;') 
+                                td(style='text-align:left;') Pin 
+                                td(id='pinmem' style='text-align:left;')
+                                td 
+                                    input(type='text' id='orgname1' class='inputstyle' maxlength="35" size='35' placeholder='New Pin' style='font-size:17px;')
+                tr(align = 'center')
+                    td(align = 'center')
+                        table(align = 'center')
+                            tr(style='text-align:center;') 
+                                td(style='text-align:center;') 
+                                    button(onclick="closememberprof()") X
+        
+        div.model12#gymaccount
+            table.divadminmgmt(width = '100%')
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter' )
+                        table.metalpanel.linear 
+                            tr 
+                                td(colspan=4) 
+                                h1 Account Status
+                                    
+                                    table(class='tblbackcolor') 
+                                        tr 
+                                            td
+                                                table(align = 'center') 
+                                                    tr(align = 'center') 
+                                                        td
+                                                            | Account State 
+                                                        td 
+                                                            input(type='text' maxtlength='10' size='10' id='state' disabled='disabled' style='font-size:17px;')
+                                                        td 
+                                                            | Days Left
+                                                        td 
+                                                            input(type='text' maxlength='10' size='10' id='valid' disabled='disabled' style='font-size:17px;')
+                                                table(align = 'center') 
+                                                    tr(align = 'center')
+                                                        td 
+                                                            |   Start Date 
+                                                        td 
+                                                            input(type='text' maxtlength='10' size='10' id='stdate' disabled='disabled' style='font-size:17px;') 
+                                                        td 
+                                                            |   End Date 
+                                                        td 
+                                                            input(type='text' maxtlength='10' size='10' id='eddate' disabled='disabled' style='font-size:17px;')
+                                                    tr(align = 'center')    
+                                                        td 
+                                                            |   Quota
+                                                        td
+                                                            input(type='text' maxtlength='10' size='10' id='quota' disabled='disabled')     
+                                                        td 
+                                                            |   Used Quota
+                                                        td
+                                                            input(type='text' maxtlength='10' size='10' id='usedquota' disabled='disabled')             
+                                        
+                                                table(align = 'center')
+                                                    tr(align = 'center') 
+                                                        td 
+                                                            button(onclick="accountstatusclose();") X 
+                                                    tr(align = 'center')
+                                                        td 
+                                                            button.metal.linear(onclick='sendmessage2()') Sales On What'sUp
+        div.model12#orginformation
+            table.divselfprofile(width="100%")
+                tr.divselfprofile(align="center")
+                    td.divselfprofile(class="aligncenter")
+                        table.metalpanel.linear 
+                            tr.tbheader
+                                td(colspan='2')
+                                    h1 Profile 
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td
+                                                label Organization Name 
+                                                input(type='text' id='orgname12' maxlength="35" size='35' placeholder='Organization Name' style='font-size:17px;')
+                                        tr
+                                            td
+                                                label Address  
+                                                input(type='text' id='orgaddress1' maxlength="40" size='35' placeholder='Address' style='font-size:17px;')
+                                        tr    
+                                            td 
+                                                label City 
+                                                input(type='text' id='orgcity1' maxlength="20" size='35' placeholder='City' style='font-size:17px;')
+                                        tr
+                                            //- td 
+                                            //-     label.user(for="") PIN 
+                                            //-     input(type='text' id='orgpin1' maxlength="6" size='16' placeholder='PIN' style='font-size:17px;')
+                                            td 
+                                                label State 
+                                                input(type='text' id='orgstate1' maxlength="20" size='35' placeholder='State' style='font-size:17px;')
+                                        tr
+                                            td 
+                                                label Contact Number 
+                                                input(type='text' id='orgcontact1' maxlength="10" size='35' placeholder='Contact Number' style='font-size:17px;')
+                                        tr    
+                                            td 
+                                                label Email ID
+                                                input(type='email' id='orgemailid1' maxlength="35" size='35' placeholder='Email ID' style='font-size:17px;')
+                            //- tr
+                            //-     td.alignleft
+                            //-         table 
+                            //-             tr
+                            //-                 td 
+                            //-                     label.user(for="") GST No.
+                            //-                     input(type='text' id='orggst1' maxlength="20" size='15' placeholder='GST Number' style='font-size:17px;')
+                            //-                 td 
+                            //-                     label.user(for="") PAN No. 
+                            //-                     input(type='text' id='orgpan1' maxlength="15" size='10' placeholder='PAN Number' style='font-size:17px;')
+                            //- tr 
+                            //-     td.alignleft
+                            //-         table 
+                            //-             tr
+                            //-                 td 
+                            //-                     label.user(for="") Bank Name and Branch 
+                            //-                     input(type='text' id='orgbankname1' maxlength='45' size='40'  placeholder='Bank Name and Branch' style='font-size:17px;')
+                            //- tr 
+                            //-     td.alignleft
+                            //-         table 
+                            //-             tr
+                            //-                 td 
+                            //-                     label.user(for="text") Account Name
+                            //-                     input(type='text' id='orgbankaccountname1' maxlength='45' size='45'  placeholder='Account Name' style='font-size:17px;')
+                            //- tr
+                            //-     td.alignleft
+                            //-         table 
+                            //-             tr
+                            //-                 td 
+                            //-                     label.user(for="") A/c No.
+                            //-                     input(type='text' id='orgbankaccountnumber1' maxlength='16' size='16'  placeholder='A/c Number' style='font-size:17px;')
+                            //-                 td 
+                            //-                     label.user(for="") IFSC Code
+                            //-                     input(type='text' id='orgifsccode1' maxlength='12' size='14'  placeholder='IFSC Code' style='font-size:17px;')
+                            tr  
+                                table 
+                                    tr
+                                        td
+                                            button(onclick='saveorginfo();') Save
+                                        td
+                                            button(onclick="closeorginfo();") X 
+        div.model12#orgprofile
+            table.divselfprofile(width="100%" )
+                tr.divselfprofile(align="center")
+                    td.divselfprofile(class="aligncenter")
+                        table.metalpanel.linear(class='tblbackcolor') 
+                            tr.tbheader
+                                td(colspan='2')
+                                    h1 Profile 
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td
+                                                label Organization Name 
+                                                input(type='text' id='orgname' maxlength="35" size='35' placeholder='Organization Name' style='font-size:17px;')
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td
+                                                label Address  
+                                                input(type='text' id='orgaddress' maxlength="40" size='17' placeholder='Address' style='font-size:17px;')
+                                            td 
+                                                label City 
+                                                input(type='text' id='orgcity' maxlength="20" size='17' placeholder='City' style='font-size:17px;')
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label PIN 
+                                                input(type='text' id='orgpin' maxlength="6" size='16' placeholder='PIN' style='font-size:17px;')
+                                            td 
+                                                label State 
+                                                input(type='text' id='orgstate' maxlength="20" size='20' placeholder='State' style='font-size:17px;')
+                        
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label Contact Number 
+                                                input(type='text' id='orgcontact' maxlength="10" size='10' placeholder='Contact Number' style='font-size:17px;')
+                                            td 
+                                                label Email ID
+                                                input(type='email' id='orgemailid' maxlength="35" size='18' placeholder='Email ID' style='font-size:17px;')
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label GST No.
+                                                input(type='text' id='orggst' maxlength="20" size='15' placeholder='GST Number' style='font-size:17px;')
+                                            td 
+                                                label PAN No. 
+                                                input(type='text' id='orgpan' maxlength="15" size='10' placeholder='PAN Number' style='font-size:17px;')
+                            tr 
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label Bank Name and Branch 
+                                                input(type='text' id='orgbankname' maxlength='45' size='40'  placeholder='Bank Name and Branch' style='font-size:17px;')
+                            tr 
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label Account Name
+                                                input(type='text' id='orgbankaccountname' maxlength='45' size='45'  placeholder='Account Name' style='font-size:17px;')
+                            tr
+                                td.alignleft
+                                    table 
+                                        tr
+                                            td 
+                                                label A/c No.
+                                                input(type='text' id='orgbankaccountnumber' maxlength='16' size='16'  placeholder='A/c Number' style='font-size:17px;')
+                                            td 
+                                                label IFSC Code
+                                                input(type='text' id='orgifsccode' maxlength='12' size='14'  placeholder='IFSC Code' style='font-size:17px;')
+                            tr  
+                                table 
+                                    tr
+                                        td
+                                            button(onclick='saveorgprofile("'+calid+'")') Save
+                                        td
+                                            button(onclick="closeorgprofile();") X 
+                                table(align="center" class='tblbackcolor') 
+                                            tr.tblflex
+                                                td
+                                                    select(type="text" id="csscolor" required style="width:150px;")   
+                                                td(align="center")
+                                                    button(onclick="orgcolorgym();" ) Add Color   
+                                            tr 
+                                                td
+                                                    input(type='file' id='uploadgymlogo' required)
+                                                    button.metal.linear(onclick='uploadgymlogo()') Upload Logo
+        div.model12#divadminmgmt
+            table.divadminmgmt(width = '100%' align="center")
+                tr.divadminmgmt(align="center")
+                    td.divadminmgmt(align="center" class = 'aligncenter')
+                        table.metalpanel.linear(align="center") 
+                            tr.tbheader(align="center")
+                                td(colspan='2' align="center")
+                                    h1 Manage Admins of your Gym
+                            tr(align="center")
+                                table(align="center") 
+                                    tr(align="center")
+                                        td.alignleft(align="center")
+                                            input(type='number' id='admincontactnumber' maxlength="10" size='20' placeholder='Contact Number' style='font-size:18px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);") 
+                                        td(align="center")    
+                                            button(onclick='searchgymadmin()') Add Admin
+                            tr(align="center")
+                                table(align="center") 
+                                    tr(align="center")
+                                        td(align="center")
+                                            div#divadminlist
+                            tr(align="center")
+                                 table(align="center") 
+                                    tr(align="center")
+                                        td(align="center") 
+                                            button(align="center" onclick="closeadminmgmt();") X
+        div.model12#uploadwindow
+            table.divadminmgmt(width = '100%')
+                tr.divadminmgmt(align = 'center')
+                    td.divadminmgmt(class = 'aligncenter')
+                        table(cellspacing="0" cellpadding="0")                 
+                            table 
+                                tr
+                                    td 
+                                        label(for="no" id='gym' style="color:red;") Header fields for CSV file should be Name, ContactNumber, Email, MemberID, Address1, Address2, City, Pin. MemberID Should be '4' Digits. Name, ContactNumber, MemberID Are Mandatory Fields 
+                            table
+                                tr
+                                    td
+                                        | Upload Member Details &ensp;
+                                        input(type='file' id='memberdetails'  required style='font-size:17px;')
+                                    td
+                                        button.metal.linear(onclick='memberdetailsupload()') Submit
+                            table 
+                                tr
+                                    td 
+                                        label(for="no" id='gym' style="color:red;") Header fields for CSV file should be PlanName,MemberID,StartDate,EndDate,Fees,Discount,TotalAmount,Status(Active/Deactivate)
+                            table 
+                                tr
+                                    td
+                                        | Upload Members Plan &ensp;
+                                        input(type='file' id='mplansupload' style='font-size:17px;' required)
+                                    td
+                                        button.metal.linear(onclick='uploadmemeberplans()') Submit 
+                            table 
+                                tr
+                                    td 
+                                        label(for="no" id='gym' style="color:red;") Header fields for CSV file should be PlanName, MemberID, PaymentDate, NextDueDate, PaidAmount, RemainingAmount
+                            table 
+                                tr
+                                    td
+                                        | Upload Payment Details &ensp;
+                                        input(type='file' id='upaymentdetails' style='font-size:17px;' required)
+                                    td
+                                        button.metal.linear(onclick='uploadpayment()') Submit 
+                            table 
+                                tr 
+                                    button(onclick="uploadfileclose();") X
+
+        div.model12#divplanmgmt
+            table.divplanmgmt(width = '100%')
+                tr.divplanmgmt(align = 'center')
+                    td.divaplangmt(class = 'aligncenter' align = 'center' )
+                        table(class='tblbackcolor' align = 'center') 
+                            tr(align = 'center') 
+                                td(align = 'center')
+                                    table(align = 'center').metalpanel.linear
+                                        tr(align = 'center').tbheader
+                                            td( align = 'center' colspan='2')
+                                                h1 Manage Plans of your Gym
+                                        table(align ='center') 
+                                            tr
+                                                td
+                                                    label Select Plan 
+                                                    select(id='plannamelist' onclick='searchgymplan()' style='font-size:17px;')
+                                        table(align='center') 
+                                            tr
+                                                td        
+                                                    button(onclick='searchgymplan()') Search
+                                        table(align='center') 
+                                            tr
+                                                td
+                                                    label Plan Name 
+                                                    input(type='text' id='planname' maxlength="20" size='20' placeholder='Plan Name' style='font-size:17px;')
+                                        table(align='center')
+                                            tr
+                                                td
+                                                    label Days 
+                                                    input(type='text' id='planduration' maxlength="3" size='3' placeholder='Duration' style='font-size:17px;')
+                                        table(align='center') 
+                                            tr
+                                                td
+                                                    label Fees 
+                                                    input(type='text' id='planfee' maxlength="5" size='5' placeholder='Fee' style='font-size:17px;')
+                                        table(align='center') 
+                                            tr
+                                                td
+                                                    button(onclick='newplan()') New
+                                                td    
+                                                    button(onclick='saveplan()') Save
+                                                td    
+                                                    button(onclick='removeplans()') Delete 
+                                                td         
+                                                    button(onclick="planclose();") X
+        div.model12#openbmi(style='border: thin solid #000000;')
+            table(width="100%" align='center' class='tblbackcolor')
+                tr(align="center")
+                    td(class="aligncenter")
+                        h1 BMI Report 
+                        table(align="center") 
+                            tr(align="center")
+                                td
+                                    label ID 
+                                    br
+                                    input(type='number' id='membid2' maxlength='4' size='4' placeholder='Member ID' onkeyup='searchbmi();' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td 
+                                    label  Age 
+                                    br
+                                    input(type='number' id='memage' maxlength="4" size='4' placeholder='Age' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td 
+                                    label  Fat 
+                                    br
+                                    input(type='number' id='memfat' maxlength="4" size='6' placeholder='Fat' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td 
+                                    label  Weight in KG 
+                                    br
+                                    input(type='number' id='memweight' maxlength="4" size='6' placeholder='weight' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td 
+                                    label  Height in CM: 
+                                    br
+                                    input(type='number' id='memheight' maxlength="4" size='6' placeholder='Height' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);") 
+                                td
+                                    label  BMI 
+                                    br
+                                    input(type='number' id='membmi' maxlength="6" size='6' placeholder='BMI' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td
+                                    label BMR 
+                                    br
+                                    input(type='number' id='membmr' maxlength="10" size='6' placeholder='BMR' style='font-size:17px; width:150px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);") 
+               
+                        table(align="center")  
+                            tr(align="center") 
+                                td
+                                    button(onclick='savebmi()') Save BMI 
+                                td
+                                    button(onclick='clearbmiform()') Clear
+                                td
+                                    button(onclick="closebmipage();") X
+                                
+                        table 
+                            tr 
+                                td(style='font-size:17px;') 
+                                    div#showbmi                
+        div.capture.model12#capture
+            table.divmembermgmt(width = '100%')
+                tr.divmembermgmt(align = 'center')
+                    td.divmembergmt(class = "aligncenter")
+                        table.metalpanel.linear 
+                            tr.tbheader
+                                td(colspan='2')
+                                    | Photo
+                            table 
+                                tr
+                                    td
+                                        video(id="webcam" width="400" height="400" autoplay)
+                                tr 
+                                    td 
+                                        canvas(id="canvas" width="400" height="400" style='margin-top: -10%;')
+                                        input(type='hidden' id='gymmid2')
+                            table(style='margin-top: -10%;') 
+                                tr 
+                                    td 
+                                        button(onclick='startcamera()') start
+                                    td
+                                        button(onclick='capture()') Capture
+                                    td 
+                                        button(onclick='saveimage()') Save
+                                    td 
+                                        button(onclick='closecamera()') X
+        div.model12.aligncenter#divattendance
+            table.aligncenter(width = '80%' cellpadding='0px' cellspacing='0px' style='border: thin solid #000000;')
+                tr.aligncenter(align = 'center' cellpadding='0px' cellspacing='0px' class='tblbackcolor')
+                    td.aligncenter(cellpadding='0px' cellspacing='0px' )
+                        h1 Attendance
+                        table.aligncenter(style='border-collapse: collapse; padding: 10px; margin:0px;' cellpadding='0px' cellspacing='0px') 
+                            tr.aligncenter
+                                td.aligncenter
+                                    <dialog id="favDialog" >
+                                        table(align='center') 
+                                            tr(align='center') 
+                                                td 
+                                                    div#showorkoutcard2 
+                                            tr(align='center')
+                                                td(align='center') 
+                                                    table(align='center') 
+                                                        tr(align='center') 
+                                                            td 
+                                                                button(onclick='shareworkoutcard2()') Share
+                                                            td 
+                                                                button(onclick='closeback()') X
+                                    </dialog>
+                            tr.aligncenter(cellpadding='0px' cellspacing='0px' style='border: thin solid #000000; padding: 10px; margin:0px;')
+                                table
+                                    tr 
+                                        td.aligncenter(cellpadding='0px' cellspacing='0px' style='padding:0px; margin-right:400px;')
+                                            table(cellpadding='0px' cellspacing='0px' style='padding: 10px; margin:0px; border: thin solid #000000;') 
+                                                tr
+                                                    td
+                                                        label Name 
+                                                        br
+                                                        input(type='text' id='membername' maxlength='20' size='30' style='font-size:17px;')
+                                                    td
+                                                        label Member ID 
+                                                        br
+                                                        input(type='number' id='mebid' maxlength='4' size='4' placeholder='ID' onkeyup='searchregmember();' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                                tr 
+                                                    td
+                                                        label Status 
+                                                        br
+                                                        input(type='text' id='memberstatus' maxlength='10' size='10' style='font-size:17px;')
+                                                table 
+                                                    tr 
+                                                        td(height='50px' width='50px' style='font-size:17px;')
+                                                            #bmireport(style='font-size:17px;')
+                                                table(align='center') 
+                                                    tr(align='center')
+                                                        //- td(colspan='0') 
+                                                        //-     button(id='attendnce12' onclick='markattendancegym()' style='font-size:17px;') Make Attendance
+                                                        td 
+                                                            button(id='seeworkoutcard') See Workoutcard 
+                                                        td 
+                                                            button(onclick="closeattendancepage();") X
+                                        td(cellpadding='0px' cellspacing='0px' style='border: 1px solid black; text-align:left; float:left;  margin-right:20px; margin-top:60px;')  
+                                            table(width='250px' height='250px')
+                                                tr
+                                                    td(style="text-align:left; font-size:17px;")
+                                                        div#profilepic2   
+                            tr.aligncenter
+                                td.aligncenter
+                                    table.aligncenter 
+                                        tr.aligncenter
+                                            td.aligncenter(style='font-size:17px;')
+                                                div#attendancedetails.aligncenter(style='font-size:17px;')
+        div.model12#memberreports(style='border: thin solid #000000;' class='tblbackcolor')
+            h1 Member Report
+            table(width="100%" )
+                tr(align="center")
+                    td(class="aligncenter")
+                        table
+                            tr 
+                                td(colspan=4)
+                        table(align='center')
+                            tr(align='center') 
+                                td(align='center')
+                                    table(align='center') 
+                                        tr(align='center')
+                                            td(width='100px'  align='center') 
+                                                label NO.Records
+                                                select(id='numberrows' onchange=';' style='font-size:17px;')
+                                                    option(value="25") 25
+                                                    option(value="50") 50
+                                                    option(value="75") 75
+                                                    option(value="100") 100
+                                            td(align='center') 
+                                                label Name
+                                                br
+                                                input(type="text" id='namefilter' placeholder="Name" maxlength='30' onkeyup="searchbyname()" size="18" style='font-size:17px; width:140px;')
+                                            td(align='center') 
+                                                label Mobile No.
+                                                br
+                                                input(type="number" id='numberfilter' placeholder="Mobile No." onkeyup="searchbyname()" maxlength='10' size="10" style='font-size:17px; width:200px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                            td(align='center' cellspacing='0' cellpadding='0')
+                                                label Start Date 
+                                                br
+                                                input(type='Date' id='startdate2' style='font-size:17px;')
+                                            td(align='center')
+                                                label End Date 
+                                                br
+                                                input(type='Date' id='enddate2' style='font-size:17px;')
+                                            td(align='center') 
+                                                label Report Type
+                                                select(id='reporttype' onchange=';' style='font-size:17px;' )
+                                                    option(value="Select") Select
+                                                    option(value="Anniversary") Anniversary
+                                                    option(value="Birth Date") Birth Date
+                            tr(align='center') 
+                                td(align='center') 
+                                    table(align='center') 
+                                        tr(align='center')  
+                                            td
+                                                button.metal.linear(onclick='maxrecords()') See Report
+                                            td 
+                                                button(onclick='closememberreport()') X
+                                            td(id='btndownload3' style='display: none;')   
+                                                //-CallDirectory download btn 
+                                                button.metal.linear(onclick='downloadreport()' ) Download
+                                                    span(class="glyphicon glyphicon-download") 
+                        table 
+                            tr 
+                                td
+                                    div(class="pagination" id="numberofpages" style='font-size:17px;') 
+                        table
+                            tr 
+                                td(style='font-size:17px;')
+                                    div#seereportmember
+        div.model12#PaymentReport(style='border: thin solid #000000;' class='tblbackcolor')
+            h1 Payment Report
+            table(width="100%")
+                tr(align="center")
+                    td(class="aligncenter")
+                        table
+                            tr 
+                                td(colspan=4)
+                        table
+                            tr
+                                td 
+                                    div#filters
+                                    label(for="user") Name 
+                                    br
+                                    input(type="text" id='namefilter2' placeholder="Name" onkeyup="searchbyname()" size="13" style='font-size:17px;')
+                                td 
+                                    label(for="user" ) Mobile No.
+                                    br
+                                    input(type="number" id='numberfilter2' placeholder="Mobile No." onkeyup="searchbyname()" maxlength='10' size="10" style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td
+                                    label From
+                                    <br>
+                                    input(type='date' id='fromdate' style='font-size:17px;')
+                                td
+                                    label To
+                                    <br>
+                                    input(type='date' id='todate' style='font-size:17px;')
+                        table 
+                            tr
+                                td 
+                                    button.metal.linear(onclick='seepaymentreport()') See Report
+                                td 
+                                    button(onclick='closememberreport()') X
+                                td(id='btndownload3' style='display: none;')   
+                                    //-CallDirectory download btn 
+                                    button.metal.linear(onclick='downloadreport()' ) Download
+                                        span(class="glyphicon glyphicon-download")  
+
+                        table 
+                            tr 
+                                td
+                                    div(class="pagination" id="numberofpages2" ) 
+                        table
+                            tr 
+                                td(style='font-size:17px;') 
+                                    div#seepaymentreport
+        div.model12#BalanceReport(style='border: thin solid #000000;' class='tblbackcolor')
+            h1 Balance  Report
+            table(width="100%")
+                tr(align="center")
+                    td(class="aligncenter")
+                        table
+                            tr 
+                                td(colspan=4)
+                        table
+                            tr
+                                td 
+                                    div#filters
+                                    label(for="user" ) Name 
+                                    br
+                                    input(type="text" id='namefilter3' placeholder="Name" onkeyup="searchbyname()" size="13" style='font-size:17px;')
+                                td 
+                                    label(for="user") Mobile No.
+                                    br
+                                    input(type="number" id='numberfilter3' placeholder="Mobile No." onkeyup="searchbyname()" maxlength='10' size="10" style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                td
+                                    label From
+                                    <br>
+                                    input(type='date' id='fromdate1' style='font-size:17px;')
+                                td
+                                    label To
+                                    <br>
+                                    input(type='date' id='todate1' style='font-size:17px;')
+                        table 
+                            tr
+                                td 
+                                    button.metal.linear(onclick='seebalencereport()') See Report
+                                td 
+                                    button(onclick='closememberreport()') X
+                                td(id='btndownload3' style='display: none;')   
+                                    //-CallDirectory download btn 
+                                    button.metal.linear(onclick='downloadreport()' ) Download
+                                        span(class="glyphicon glyphicon-download")  
+
+                        table 
+                            tr 
+                                td
+                                    div(class="pagination" id="numberofpages2" style='font-size:17px;') 
+                        table
+                            tr 
+                                td(style='font-size:17px;') 
+                                    div#seebalencereport
+        div.model12#workoutcards(style='border: thin solid #000000;' class='tblbackcolor')
+            table(width="100%")
+                tr(align="center")
+                    td(class="aligncenter")
+                        h1 Workout Cards
+                        table 
+                            tr 
+                                td 
+                                    label Card Name
+                                    input(type="text" id='cardname' size='20' maxlength='30' style='font-size:17px;')
+                                td
+                                    button(onclick='addcards()') Add
+                        table(align="center")
+                            tr(align="center") 
+                                td(align="center") 
+                                    label Card Name 
+                                    select(id='cardname2' onchange='previewcard();' style='font-size:17px;')
+                                        option(value="Select") Select  
+                                td 
+                                    label Exercises Name 
+                                    select(id='exername' onchange=';' style='font-size:17px;')
+                                        option(value="Select") Select  
+                                td
+                                    label Weight
+                                    input(type="text" id='weight' size='4' maxlength='4' width='10px' style='font-size:17px;')
+                                td 
+                                    label Times
+                                    input(type="text" id='howmany' size='4' maxlength='4' width='10px' style='font-size:17px;') 
+                                td
+                                    label Repetition
+                                    input(type="text" id='rep' size='4' maxlength='4' width='10px' style='font-size:17px;')
+                                td 
+                                    label Sequence 
+                                    input(type="text" id='seq' size='4' maxlength='4' style='font-size:17px;')
+                                td 
+                                    label Days
+                                    select(id='exerday' onchange=';' style='font-size:17px;')
+                                        option(value="Select") Select 
+                                        option(value="Day 1") Day 1
+                                        option(value="Day 2") Day 2
+                                        option(value="Day 3") Day 3
+                                        option(value="Day 4") Day 4
+                                        option(value="Day 5") Day 5
+                                        option(value="Day 6") Day 6
+                                        option(value="Day 7") Day 8
+                                        option(value="Day 9") Day 9
+                                        option(value="Day 10") Day 10
+                        table 
+                            tr 
+                                td 
+                                    button(onclick='addexercise()') Add Exercise
+                                td 
+                                    button(id='btnno' onclick='screencapture()') Download 
+                                td 
+                                    button(onclick="workoutcadeclose();") X
+                        table(id='newgymcard')
+                            tr
+                                td
+                                    table 
+                                        tr  
+                                            td(style='font-size:17px; background-color:white;') 
+                                                div#showexercisess
+                                        tr 
+                                            td 
+                                                br
+                                                br
+                                                br
+                        hr
+                        h1 Assign Workout Cards 
+                                //- (style='background-color:#e5e4e2; text-shadow: 0.1em 0.1em 0.05em #c0c0c0;')
+                        table(align="center")
+                            tr(align="center") 
+                                td(align='center')
+                                    td 
+                                        table
+                                            tr
+                                                td                                               
+                                                    label ID
+                                                    br
+                                                    input(type='text' id='memberIDsearch3' maxlength='4' size='5' placeholder='ID' style='font-size:17px;')
+                                                
+                                                td(align='center')
+                                                    label Programmer
+                                                    br
+                                                    input(type='text' id='programmer' maxlength='20' size='20' placeholder='Programmer' style='font-size:17px;')
+                                                td(align="center")                              
+                                                    label Card Name 
+                                                    br
+                                                    select(id='cardname3' style='font-size:17px;' onchange='preassignedcard()')
+                                                        option(value="Select") Select  
+                        table(id='newgymcard2' align='center')
+                            tr(align='center')
+                                td(align='center')
+                                    table(align='center')
+                                        tr(align='center')  
+                                            td(style='font-size:17px; background-color:white;') 
+                                                div#showexercisess2
+                                        tr(align='center') 
+                                            td 
+                                                br
+                                                br
+                        table 
+                            tr(align='center') 
+                                td(align='center') 
+                                    table(align='center')
+                                        tr(align='center') 
+                                            td 
+                                                button(onclick='assignworkoutcard()') Save  
+                                            td
+                                                button(onclick='shareworkoutcard()') Share Via What's App 
+
+        div.model12#divdashboard(style='border: thin solid #000000;')
+            table(align='center')
+                tr(align='center')
+                    td(align='center')
+                        | Dashboard 
+                    td(align='center')
+                        table(align='center')
+                            tr(align='center')
+                                td(align='center') 
+                                    button(onclick='divdashboardclose();') X     
+                tr(align='center') 
+                    table(align='center')
+                        tr(align='center')        
+                            td(align='center')
+                                | Active AND Deactive Member
+                                div#showdashboardactdact   
+                tr(align='center') 
+                    table(align='center')
+                        tr(align='center')        
+                            td(align='center')
+                                |   Attendance 
+                                div#showdashboardattendance 
+        div.model12#showfullreport(style='border: thin solid #000000;')
+            table(align='center')
+                tr(align='center')
+                    td(align='center')
+                       button(onclick='closefullreportpage();') X
+                tr(align='center')    
+                    td(align='center')
+                        table(align='center')
+                            tr(align='center')
+                                td(align='center') 
+                                    div#showtotalmemberinfo 
+               
+        div.model12#divmembermgmt(style='border: thin solid #000000;')
+            table.divmembermgmt(width = '100%' class='tblbackcolor')
+                tr.divmembermgmt(align = 'center')
+                    td.divmembergmt(class = "aligncenter")
+                        table.metalpanel.linear(width='100%' ) 
+                            tr.tbheader
+                                td(colspan='2')
+                                    h1() Manage Members
+                            table
+                                tr
+                                    td.alignleft
+                                        table
+                                            tr 
+                                                td
+                                                    div(class="autocomplete" style="width:200px;")
+                                                        label Name 
+                                                        br
+                                                        input(type='text' id='membernamesearch' maxlength='30' size='10' placeholder='Name' style='font-size:17px;') 
+                                                td
+                                                    label Mobile 
+                                                    br
+                                                    input(type='number' id='membermobilesearch' maxlength='10' size='10' placeholder='Mobile' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                                td
+                                                    label ID
+                                                    br
+                                                    input(type='number' id='memberIDsearch' maxlength='4' size='10' placeholder='ID' style='font-size:17px; width:160px; margin-bottom:10px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                            table 
+                                tr
+                                    td
+                                        button(onclick='searchmember()') Search
+                                    td
+                                        button(onclick='newmember()') New 
+                                    td
+                                        button(onclick='clearscrean();') Clear
+                                    td
+                                        button(onclick="closememberpage();") X
+                            table(width='100%' style='border: thin solid #000000; padding: 0px; margin:0px;' cellpadding='0' cellspacing='0')
+                                tr
+                                    td(width='' height='200px' cellpadding='0' cellspacing='0' style='padding: 0px; margin:0px;')
+                                        table(width='' height='250px' style='padding: 0px; margin:0px;' cellpadding='0' cellspacing='0')  
+                                            tr 
+                                                td
+                                                    table 
+                                                        tr 
+                                                            td
+                                                                input(type='hidden' id='memberid')
+                                                                label Member Name
+                                                                br
+                                                                input(type='text' id='membername2' maxlength="25" placeholder='Member Name' style='font-size:17px;')
+                                                            td 
+                                                                label Member ID 
+                                                                br
+                                                                input(type='number' id='memberid2' maxlength="4" size='4' placeholder='ID' style='font-size:17px; width:100px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                                            td
+                                                                label Mobile No 
+                                                                br
+                                                                input(type='number' id='membermobile' maxlength="10" size='10' placeholder='Mobile' style='font-size:17px; width:200px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                                            td
+                                                                label Email ID 
+                                                                br
+                                                                input(type='email' id='memberemail' maxlength="30" size='30' placeholder='Email' style='font-size:17px; width:220px;')               
+                                            tr(align='center') 
+                                                td(align='center') 
+                                                    table(align='center') 
+                                                        tr(align='center')
+                                                            td
+                                                                label Birth Date 
+                                                                br
+                                                                input(type='Date' id='birthdate')
+                                                            td
+                                                                label Anniversary Date 
+                                                                br
+                                                                input(type='Date' id='anniversarydt')
+                                            tr  
+                                                td
+                                                    table 
+                                                        tr
+                                                            td 
+                                                                label Address1 
+                                                                input(type='text' id='memberaddress1' maxlength="30" size='23' placeholder='Address' style='font-size:17px;')
+                                                            td 
+                                                                label Address2
+                                                                input(type='text' id='memberaddress2' maxlength="30" size='22' placeholder='Address' style='font-size:17px;') 
+                                                            td 
+                                                                label City
+                                                                input(type='text' id='membercity' maxlength="20" size='15' placeholder='City' style='font-size:17px;')
+                                                            td 
+                                                                label PIN Code 
+                                                                input(type='text' id='memberpincode' maxlength="6" size='6' placeholder='PIN Code' style='font-size:17px;')
+                        
+                                            tr(align='center')
+                                                td(align='center') 
+                                                    table(align='center') 
+                                                        tr(align='center') 
+                                                            td 
+                                                                td(cellpadding='0' cellspacing='0' style='padding: 0px; margin-right:0px;') 
+                                                                    button(onclick='savemember()' style='font-size:17px !important;') Save                                                      
+                                    td(width='340px' height='200px' style='border: thin solid #000000; padding: 0px; margin:0px;' cellpadding='0' cellspacing='0')
+                                        table(cellpadding='0' cellspacing='0' style='padding: 0px; margin:0px;' id='showimgaftersearch') 
+                                            tr(cellpadding='0' cellspacing='0' style='padding: 0px; margin:0px;')
+                                                td(cellpadding='0' colspan='2' cellspacing='0' width='380px' height='300px' style='padding: 0px; margin:0px; border: thin solid #000000;') 
+                                                    div#imagepreview
+                                            tr 
+                                                //- td
+                                                //-     button(onclick='opencamera()') Click Photo 
+                                                td(cellpadding='0' cellspacing='0' style='padding: 0px; margin-right:0px;')
+                                                    input(type='file' id='uploadselfie' required)
+                                                    br
+                                                    button.metal.linear(onclick='uploadselfie1()') Upload               
+                            table 
+                                tr 
+                                    td 
+                                        input(type="hidden" id='memberid34')
+                           
+                                       
+                            table(width='100%') 
+                                tr
+                                    td
+                                        h1 Add/Update Plan
+                            table 
+                                tr
+                                    td
+                                        label Member Plans 
+                                        br
+                                        select(id='memberplan' style='font-size:17px;' onchange ='showdetails()')
+                                    td 
+                                        label Duration 
+                                        br
+                                        input(type='number' id='duration' maxlength="5" size='5' placeholder='duration' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Start Date 
+                                        <br>
+                                        input(type='date' id='startdate' size='10' placeholder='Start Date' onchange ='enddate()' style='font-size:17px;')
+                                    td 
+                                        label End Date
+                                        <br>
+                                        input(type='date' id='enddate' maxlength="10" size='10' placeholder='End Date' style='font-size:17px;')
+                                    td 
+                                        label Fees 
+                                        br
+                                        input(type='number' id='fee' maxlength="5" size='5' placeholder='Fee' style='font-size:17px;' onkeyup='calculatetotal();' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Discount 
+                                        br
+                                        input(type='number' id='discount' maxlength="5" size='5' style='font-size:17px;' placeholder='discount' onkeyup='calculatetotal();' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Total Fees 
+                                        br
+                                        input(type='number' id='amount2' maxlength="5" size='5' placeholder='Total Fees' style='font-size:17px; width:200px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                            table
+                                tr
+                                    td
+                                        button(onclick='savememberplan()') Add/Update Plan
+                                    td
+                                        button(onclick='showmyplans()') Show Plans
+                            table 
+                                tr 
+                                    td(style='font-size:17px;') 
+                                        div#myusedplans
+                            hr(style='color:#000000')
+                            table(width='100%')
+                                tr      
+                                    td
+                                        h1 Add Payment
+                            table 
+                                tr(width='40%')
+                                    td 
+                                        label Payment Date 
+                                        <br>
+                                        input(type='date' id='pdate' maxlength="5" size='5' placeholder='Date' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Total Fees 
+                                        br
+                                        input(type='text' id='balance' maxlength="5" size='5' placeholder='Balance' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")  
+                                    td 
+                                        label Paid Amount 
+                                        br
+                                        input(type='text' id='paid' maxlength="5" size='5' placeholder='Paid' onkeyup='cal2();' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Remaining amount
+                                        br
+                                        input(type='text' id='remamount' maxlength="5" size='5' placeholder='Bal' style='font-size:17px;' oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);")
+                                    td 
+                                        label Next Due  
+                                        <br>
+                                        input(type='date' id='balancedate' maxlength="5" size='5' style='font-size:17px;')
+                            table
+                                tr
+                                    td
+                                        button(onclick='savepayments()') Save Payment
+                                    td
+                                        button(onclick='paymenthistory()') Payments History
+                            table
+                                tr 
+                                    td(style='font-size:17px;') 
+                                        div#previouspayments
+        div#gadv
+            table(width='400px' height='200px' align='center') 
+                tr(width='400px' height='200px' align='center') 
+                    td(width='400px' height='200px' align='center')
+                        div(height='50px').googleadv
+                            script(async src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+                            //- Mob2
+                            ins.adsbygoogle(style='display:block' data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-9725756988745063" data-ad-slot="1306374827" data-full-width-responsive='true')
+                            script(type='text/javascript').
+                                (adsbygoogle = window.adsbygoogle || []).push({}); 
+<!--Function For download E qrcode...-->
+    //- script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js")
+    //- script(src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js")
+    //- script.
+    //-     $(document).ready(function(){
+    //-         $("#btnno").click(function(){
+    //-             domtoimage.toBlob(document.getElementById('showexercisess'))
+    //-             .then(function (blob) {
+    //-             window.saveAs(blob, 'gymcard.png');
+    //-         });
+    //-         })
+    //-     }) 
+<!--Function For lable in-out-->
+    script(src='/static/js/jquerykm.min.js')
+    script.
+    
+      $('input').on('mouseover', function() {
+          $(this).parent().find('label').addClass('active');
+        });
+
+     $('select').on('mouseover', function() {
+          $(this).parent().find('label').addClass('active');
+        });
+
+      $('input').on('focusin', function() {
+          $(this).parent().find('label').addClass('activered');
+
+        });
+    
+      $('select').on('focusin', function() {
+          $(this).parent().find('label').addClass('activered');
+
+        });
+
+     
+        
+      $('input').on('mouseout', function() {
+          if (this.value) {
+            $(this).parent().find('label').removeClass('active');
+          }else if(!this.value){
+              $(this).parent().find('label').removeClass('active');
+          }
+         });
+        
+            
+      $('input').on('focusout', function() {
+          if (this.value) {
+            $(this).parent().find('label').removeClass('activered');
+          }else if(!this.value){
+              $(this).parent().find('label').removeClass('activered');
+          }
+         });
+
+      $('select').on('mouseout', function() {
+          if (this.value) {
+            $(this).parent().find('label').removeClass('active');
+          }else if(!this.value){
+            $(this).parent().find('label').removeClass('active');
+          }
+        });
+
+        $('select').on('focusout', function() {
+          if (this.value) {
+            $(this).parent().find('label').removeClass('activered');
+          }else if(!this.value){
+              $(this).parent().find('label').removeClass('activered');
+          }
+         });                               
+block script
+    script(type='text/javascript' src='/static/js/gymmanagement.js')   
+    script(type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js")
+    script(src="https://github.com/niklasvh/html2canvas/releases/download/0.5.0-alpha1/html2canvas.js") 
